@@ -4,6 +4,8 @@
 
 #include "WifiManager.hpp"
 
+WifiManager wifiManager;
+
 #define TOUCH_PIN 15
 #define LED_PIN 23
 #define BUZZER_PIN 22
@@ -89,6 +91,10 @@ void touchTask(void *pv) {
     if (touchValue < TOUCH_THRESHOLD) {
       if (!doOnce_) {
         Serial.println("RING!!!");
+
+        if (WiFi.status() != WL_CONNECTED) {
+          wifiManager.publish("doorbell/state", "1");
+        }
         doOnce_ = true;
       }
       digitalWrite(LED_PIN, 1);
@@ -106,28 +112,19 @@ void touchTask(void *pv) {
   vTaskDelete(NULL);
 }
 
-// void mqttTask(void* pv) {
-//   // connect wifi
-//   // connect mqtt
-//   while(1) {
-//     // reconnect
-//     vTaskDelay(10);
-//   }
-//   vTaskDelete(NULL);
-// }
-
 void setup() {
   Serial.begin(115200);
   pinMode(LED_PIN, OUTPUT);
   pinMode(BUILTIN_LED, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
 
-  digitalWrite(BUILTIN_LED, 1);     // indicator of deepsleep
+  digitalWrite(BUILTIN_LED, 1); // indicator of NOT in deepsleep
 
   touchWakeCallback();
 
   xTaskCreate(touchTask, "touchTask", 1024 * 2, NULL, 1, NULL);
-  // xTaskCreate(mqttTask, "mqttTask", 1024 * 4, NULL, 1, NULL);
+  wifiManager.setup_wifi();
+  wifiManager.setup_mqtt();
 }
 
 void loop() {
