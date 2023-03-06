@@ -122,7 +122,7 @@ void setup() {
   pinMode(BUILTIN_LED, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
 
-  digitalWrite(BUILTIN_LED, 1);
+  digitalWrite(BUILTIN_LED, 1);     // indicator of deepsleep
 
   touchWakeCallback();
 
