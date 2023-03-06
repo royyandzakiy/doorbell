@@ -2,7 +2,8 @@
 
 Simple doorbell using esp32
 
-## Future Development
+<details open>
+<summary>Future Development</summary>
 1. Basic
 - add LED to give feedback of press
 - add Buzzer
@@ -19,3 +20,4 @@ Simple doorbell using esp32
 - esp32 add lora p2p sender
 - raspi add lorawan
 - esp32 add lorawan
+</details>
