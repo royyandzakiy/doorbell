@@ -4,6 +4,7 @@ Simple doorbell using esp32
 
 <details open>
 <summary>Future Development</summary>
+<br/>
 1. Basic
 - add LED to give feedback of press
 - add Buzzer
